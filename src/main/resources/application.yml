@@ -1,0 +1,37 @@
+# spring secutiry http basic auth? ?? ???? ? ??.
+
+management:
+  endpoint:
+    health:
+      access: read_only
+      cache: # ?? ?? ??. ms, s, d?
+        time-to-live: 1ms
+    beans:
+      access: read_only
+    caches:
+      access: read_only
+    heapdump:
+      access: read_only
+  endpoints:
+    web:
+      cors:
+        allowed-origins: "http://test.com", "http://test2.com"
+        allowed-methods: GET, POST
+      exposure:
+        include: "*" # ?? ?? ? ??
+        exclude: # health? beans? ??. exclude? ????? ??.
+          - health
+          - beans
+
+# Spring Boot 3.4 Release Notes ? Actuator ???(Enabled ? Access)
+# ?? ?? ??? none (?? ???? ??)
+# management.endpoints.access.default=none
+
+# health? ??? ??
+# management.endpoint.health.access=read-only
+
+# loggers? ?? ??(??/??)
+# management.endpoint.loggers.access=unrestricted
+
+# HTTP ??(??? ??? ??)? ??? ???? ??
+# management.endpoints.web.exposure.include=health,loggers
