@@ -1,10 +1,10 @@
-# spring secutiry http basic auth? ?? ???? ? ??.
+# spring secutiry http basic auth로 보안 설정가능.
 
 management:
   endpoint:
     health:
       access: read_only
-      cache: # ?? ?? ??. ms, s, d?
+      cache: # 캐싱 시간 설정. ms, s, d등
         time-to-live: 1ms
     beans:
       access: read_only
@@ -15,23 +15,25 @@ management:
   endpoints:
     web:
       cors:
-        allowed-origins: "http://test.com", "http://test2.com"
+        allowed-origins:
+          - "http://test.com"
+          - "http://test2.com"
         allowed-methods: GET, POST
       exposure:
-        include: "*" # ?? ?? ? ??
-        exclude: # health? beans? ??. exclude? ????? ??.
+        include: "*" # 전체 포함
+        exclude: # health과 beans는 제외. exclude가 우선순위가 높음.
           - health
           - beans
 
-# Spring Boot 3.4 Release Notes ? Actuator ???(Enabled ? Access)
-# ?? ?? ??? none (?? ???? ??)
+# Spring Boot 3.4 Release Notes에서 Actuator 바뀜(Enabled에서 Access)
+# 전역 기본 접근 none (모두 비활성과 동일)
 # management.endpoints.access.default=none
 
-# health? ??? ??
+# health를 읽기전용
 # management.endpoint.health.access=read-only
 
-# loggers? ?? ??(??/??)
+# loggers를 완전 허용(읽기/쓰기)
 # management.endpoint.loggers.access=unrestricted
 
-# HTTP ??(??? ??? ??)? ??? ???? ??
+# HTTP 노출(웹에서 보이게 할지)은 기본과 동일하게 설정
 # management.endpoints.web.exposure.include=health,loggers

@@ -1,0 +1,10 @@
+###
+POST http://localhost:8080/actuator/myLibraryInfo
+Content-Type: application/json
+
+{
+  "name": "test",
+  "enableSomething": false
+}
+
+###
