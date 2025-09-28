@@ -6,6 +6,8 @@ management:
       access: read_only
       cache: # 캐싱 시간 설정. ms, s, d등
         time-to-live: 1ms
+#      show-components: always
+      show-details: always
     beans:
       access: read_only
     caches:
@@ -22,7 +24,7 @@ management:
       exposure:
         include: "*" # 전체 포함
         exclude: # health과 beans는 제외. exclude가 우선순위가 높음.
-          - health
+          # - health
           - beans
 
 # Spring Boot 3.4 Release Notes에서 Actuator 바뀜(Enabled에서 Access)
