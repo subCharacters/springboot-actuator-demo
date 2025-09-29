@@ -2,6 +2,12 @@ plugins {
     id 'java'
     id 'org.springframework.boot' version '3.5.6'
     id 'io.spring.dependency-management' version '1.1.7'
+    id "com.gorylenko.gradle-git-properties" version "2.4.1" // git.properties를 생성해줌.
+
+}
+ // https://docs.spring.io/spring-boot/how-to/build.html#howto.build.generate-info
+springBoot {
+    buildInfo() // Generate Build Information을 생성하기 위함.
 }
 
 group = 'com.subcharacter'
@@ -11,6 +17,18 @@ description = 'springboot-actuator-demo'
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+// 스프링부트 공홈을 참조하면 더 간단하게 되는듯.
+processResources {
+    filesMatching("**/application.yml") {
+        expand(
+                project.properties + [
+                        group: project.group,
+                        version: project.version
+                ]
+        )
     }
 }
 

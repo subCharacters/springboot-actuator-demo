@@ -14,6 +14,8 @@ management:
       access: read_only
     heapdump:
       access: read_only
+    env:
+      show-values: always # 마스킹 처리되어있는 것을 보이게
   endpoints:
     web:
       cors:
@@ -26,7 +28,6 @@ management:
         exclude: # health과 beans는 제외. exclude가 우선순위가 높음.
           # - health
           - beans
-
 # Spring Boot 3.4 Release Notes에서 Actuator 바뀜(Enabled에서 Access)
 # 전역 기본 접근 none (모두 비활성과 동일)
 # management.endpoints.access.default=none
@@ -39,3 +40,25 @@ management:
 
 # HTTP 노출(웹에서 보이게 할지)은 기본과 동일하게 설정
 # management.endpoints.web.exposure.include=health,loggers
+
+  info:
+    build:  # build-info.properties가 필요하다. plug in에 생성하는 설정이 필요.
+            # build/resources/main/META-INF 안에 생성된다.
+      enabled: true
+    git: # git.properties가 필요하다. plug in에 생성하는 설정이 필요.
+         # build/resources/main 안에 생성된다.
+      enabled: true
+      mode: full
+    env: # 환경변수는 info. 으로 설정되어 있는 환경 변수를 보여준다.
+      enabled: true
+    java:
+      enabled: true
+    os:
+      enabled: true
+info: # 이렇게 설정하면 env가 보인다. 혹은 VM환경변수에 -Dname=aaa와 같이 설정해도 똑같이 적용된다.
+  name: aaa
+  age: 11
+  my-app:
+    group-id: "@project.group@" # 메이븐 pom.xml
+    version: ${project.version} # 그레이들은 build.gradle에 expand로 설정을 해줘야함.
+    group: ${project.group}
